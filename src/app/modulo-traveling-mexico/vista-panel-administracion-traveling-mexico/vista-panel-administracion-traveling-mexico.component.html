@@ -1,0 +1,41 @@
+<body>
+
+    <section id="seccion1_descripcion">
+        <article>
+            <img src="../../../assets/img/traveling-mexico.png">
+              <h1><b>Traveling México</b></h1>
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's standard dummy text ever since.Lorem Ipsum is simply dummy
+                     text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard ever since.
+                </p>
+        </article>
+        <article>
+            <a>
+                <button (click)="activarVistaAgencia()">🏢 Agencias</button>
+            </a>
+            <a>
+                <button (click)="activarVistaDestino()">🌄Destinos</button>
+            </a>
+            <a>
+                <button (click)="activarVistaTour()"> 🚌 Tours</button>
+            </a>
+        </article>
+    </section>
+
+    <section *ngIf="vistaAgencia==true">
+      <app-vista-panel-administracion-agencias></app-vista-panel-administracion-agencias>
+    </section>
+
+    <section *ngIf="vistaDestino==true">
+
+      <app-vista-panel-administracion-destinos></app-vista-panel-administracion-destinos>
+    </section>
+
+    <section *ngIf="vistaTour==true">
+      <app-vista-panel-administracion-tours></app-vista-panel-administracion-tours>
+    </section>
+    
+
+   
+</body>

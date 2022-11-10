@@ -1,0 +1,131 @@
+footer{
+    background-color:#f7f7f8;
+    padding: 5% 5%;
+    z-index:0;
+}
+
+.etiqueta_verde{
+    background-color: #caffbf;
+    color: #69c457;
+    padding: 0px 4px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+
+.etiqueta_roja{
+    background-color: #fcbaba;
+    color: #f15757;
+    padding: 0px 4px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.etiqueta_morada{
+    background-color: #bdc8ff;
+    color: #5c75f3;
+    padding: 0px 4px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.etiqueta_naranja{
+    background-color: #ffd4ae;
+    color: #f8953e;
+    padding: 0px 4px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+
+/* ============================================================ Vista: smartphone ============================================================ */
+
+
+@media screen and (max-width: 700px) { 
+
+    #footer_seccion1{
+        display: grid;
+        grid-template-columns: 100%;
+        justify-items: center;
+        text-align: center;
+        padding: 0% 0% 2% 0%;
+    }
+
+    #footer_seccion1 > article > ul>li {
+        list-style: none;
+    }
+
+    #footer_seccion1 > article > ul>li>a {
+        text-decoration: none;
+        color: #000;
+    }
+
+    #footer_seccion2{
+        text-align: center;
+    }
+
+    #footer_seccion2 > hr{
+        color: rgb(180, 180, 180);
+    }
+}
+
+
+/* ============================================================ Vista: Tablets =================================================================*/
+
+@media screen and (min-width: 680px) {
+
+    #footer_seccion1{
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+        padding: 0% 0% 2% 0%;
+    }
+
+    #footer_seccion1 > article > ul>li {
+        list-style: none;
+    }
+
+    #footer_seccion1 > article > ul>li>a {
+        text-decoration: none;
+        color: #000;
+    }
+
+    #footer_seccion2{
+        text-align: left;
+    }
+
+    #footer_seccion2 > hr{
+        color: rgb(180, 180, 180);
+    }
+
+}
+
+
+
+
+/* ============================================================ Vista: Pantallas Grandes ============================================================ */
+@media screen and (min-width: 1300px) {
+
+    #footer_seccion1{
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+        padding: 0% 0% 2% 0%;
+    }
+
+    #footer_seccion1 > article > ul>li {
+        list-style: none;
+    }
+
+    #footer_seccion1 > article > ul>li>a {
+        text-decoration: none;
+        color: #000;
+    }
+
+    #footer_seccion2{
+        text-align: left;
+    }
+
+    #footer_seccion2 > hr{
+        color: rgb(180, 180, 180);
+    }
+   
+}

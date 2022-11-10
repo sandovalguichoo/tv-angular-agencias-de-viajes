@@ -1,0 +1,51 @@
+<section>
+  <br>
+  <hr>
+  <h2>Agencias:</h2>
+
+  <table class="table" *ngIf="listEntityAgencia!=null; else templete_sin_agencias_registradas "> 
+      <thead>
+        <tr>
+          <td scope="col"><b>📌 Id:</b></td>
+          <td scope="col"><b>🏢 Nombre:</b></td>
+          <td scope="col"><b>📍 Dirección:</b></td>
+          <td scope="col"><b>📆 Fecha de registro:</b></td>
+          <td scope="col"></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <tr *ngFor="let entity of listEntityAgencia">
+            <td>{{entity.idAgencia}}</td>
+            <td>{{entity.nombreAgencia}}</td>
+            <td>{{entity.direccion}} </td>
+            <td>{{entity.fechaRegistro}}</td>
+          <td>
+              <a><button  type="button" class="btn btn-primary" (click)="cargarVentanaEditarAgencia()">Editar </button></a>
+              <a><button type="button" class="btn btn-danger" (click)="eliminarAgenciaById(entity)">Eliminar</button></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>  
+
+    <ng-template #templete_sin_agencias_registradas>
+      <p>Lo sentimos, aún no hay agencias registradas. Añade una para poder verla aquí</p>
+    </ng-template>
+
+    <a><button  type="button" class="btn btn-success" (click)="cargarVentanaGuardarAgencia()">Añadir Agencia</button></a>  
+
+</section>
+
+
+
+<section *ngIf="activarBtnGuardarEditarAgencia==true" id="seccion2-guardarEditarAgencia">
+  <br><br>
+  <h2>{{ tituloSeccionAnadorEditarAgencia }}</h2>
+  <form>
+    <input type="number" disabled><br>
+    <input type="text" placeholder="Nombre Agencia"><br>
+    <input type="text" placeholder="Dirección Agencia"><br>
+    <input type="date"><br><br>
+    <input type="button" class="btn btn-success" value="{{tituloBtnGuardarEditarAgencia}}">
+  </form>
+  <button class="btn btn-danger" (click)="ocultarSeccionGuardarEditarAgenci
