@@ -6,6 +6,8 @@ import { VistaPanelAdministracionAgenciasComponent } from './vista-panel-adminis
 import { VistaPanelAdministracionDestinosComponent } from './vista-panel-administracion-destinos/vista-panel-administracion-destinos.component';
 import { VistaPanelAdministracionToursComponent } from './vista-panel-administracion-tours/vista-panel-administracion-tours.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 
 
@@ -18,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   exports: [
     VistaPanelAdministracionTravelingMexicoComponent
