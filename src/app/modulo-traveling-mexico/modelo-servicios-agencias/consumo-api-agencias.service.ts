@@ -10,7 +10,9 @@ import { HttpClient } from '@angular/common/http';
 export class ConsumoApiAgenciasService {
 
   //-- Variables globales
-  private urlEndPind:String="https://traveling-aapi.herokuapp.com/agencias/"
+  private urlEndPind:String="https://traveling-aapi.herokuapp.com/agencias/";
+
+
 
 
 
@@ -56,6 +58,14 @@ export class ConsumoApiAgenciasService {
     )
   }
 
+  public editarAgencia(entityAgencia:EntityAgencia):Observable<EntityAgencia>{
+    return this.http.put(this.urlEndPind+"update/"+entityAgencia.idAgencia,entityAgencia).pipe(
+      map((respuesta) => respuesta as EntityAgencia),
+      catchError(e=>{
+        return throwError(e);
+      })
+    )
+  }
 
 
   //-- Crear he inicializar variables

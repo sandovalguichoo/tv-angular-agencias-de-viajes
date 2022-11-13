@@ -3,6 +3,7 @@ import { ConsumoApiAgenciasService } from '../modelo-servicios-agencias/consumo-
 import { EntityAgencia } from '../modelo-entitys-agencias/entity-agencia';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ThisReceiver } from '@angular/compiler';
+import { HttpErrorResponse, HttpResponse, HttpHeaders, HttpStatusCode, HttpRequest } from '@angular/common/http';
 
 @Component({
   selector: 'app-vista-panel-administracion-agencias',
@@ -40,49 +41,131 @@ public formGrupFormGuardarEditar=new FormGroup({
   form_fechaCreacionAgencia: new FormControl("",)
 });
 
+//-- Metodo limpiar formulario guardar/editar Agencia
+private limpiarFormularioGuardarEditarAgencia():void{
+  this.formGrupFormGuardarEditar.reset();
+}
+
+
+//-- Activar o desactivar seccion editar/eliminar
+public ocultarSeccionGuardarEditarAgencia():void{
+  this.activarBtnGuardarEditarAgencia=false;
+  this.limpiarFormularioGuardarEditarAgencia();
+}
+
+//-- Metodo cargar ventana guardar
+public cargarVentanaGuardarAgencia():void{
+  this.activarBtnGuardarEditarAgencia=true;
+  this.tituloSeccionAnadorEditarAgencia="Guardar Agencia:";
+  this.tituloBtnGuardarEditarAgencia="Guardar";
+  this.mensajePersonalizadoFormulario="";
+  this.limpiarFormularioGuardarEditarAgencia();
+}
+
+
+//-- Metodo cargar ventana editar
+public cargarVentanaEditarAgencia(entityAgencia: EntityAgencia):void{
+  this.activarBtnGuardarEditarAgencia=true;
+  this.tituloSeccionAnadorEditarAgencia="Editar Agencia:";
+  this.tituloBtnGuardarEditarAgencia="Editar";
+  this.mensajePersonalizadoFormulario="";
+  this.limpiarFormularioGuardarEditarAgencia();
+
+  this.servicioConsumoApiAgencias.buscarAgenciaById(entityAgencia.idAgencia).subscribe(
+    
+    HttpResponse => {
+    this.entityAgencia=HttpResponse;   
+    if(this.entityAgencia==null){
+      this.mensajePersonalizadoGlobal=" ❌ Lo sentimos, la Agencia que quieres editar no existe";
+      this.ocultarSeccionGuardarEditarAgencia();
+      this.listarAgencias();
+    } 
+  },
+  HttpErrorResponse => {
+        switch(HttpErrorResponse.status){
+            default:
+                this.mensajePersonalizadoGlobal="❌ ¡Error "+HttpErrorResponse.status+"! Lo sentimos esta funcionalidad no esta disponible, intentalo más tarde";
+                this.ocultarSeccionGuardarEditarAgencia();
+                this.listarAgencias();
+              break;
+        }
+
+      }
+  )
+
+}
+
 
 
 //-- Metodo listar agencias
 public listarAgencias():void{
-    this.servicioConsumoApiAgencias.listarAgencias().subscribe(respuesta => {
-      this.listEntityAgencia = respuesta;
-    },
-    err=>{
-
-      switch(err.estatus){
-        case 500:
-          this.mensajePersonalizadoGlobal="Lo sentimos no se han podido cargar los datos";
-        break;
-
-        default:
-          this.mensajePersonalizadoGlobal="Error desconocido, intentalo más tarde. Error "+err.status;
-        break;
-
+    this.servicioConsumoApiAgencias.listarAgencias().subscribe(
+      
+    HttpResponse => {
+      this.listEntityAgencia = HttpResponse;
+      if(this.listEntityAgencia==null){
+        this.mensajePersonalizadoGlobal="❌ ¡Lo sentimos, aún no hay agencias registradas. Añade una para poder verla aquí";
       }
-      this.mensajePersonalizadoGlobal
-      alert("¡Ocurrio un error!");
-    }
+    },
+      HttpErrorResponse=>{
+        switch(HttpErrorResponse.estatus){
+           default:
+               this.mensajePersonalizadoGlobal="❌ ¡Error "+HttpErrorResponse.status+"! Lo sentimos esta funcionalidad no esta disponible, intentalo más tarde";
+             break;
+
+        }
+      }
   )
+
 }
 
 
-//-- Metodo guardar
+
+//-- Metodo guardar/Editar
 public guardarAgencia():void{
 
   if (this.formGrupFormGuardarEditar.valid) {
-    this.servicioConsumoApiAgencias.guardarAgencia(this.entityAgencia).subscribe(respuesta =>{
-        this.entityAgencia=respuesta;
-        this.listarAgencias();
-        this.ocultarSeccionGuardarEditarAgencia();
-        this.mensajePersonalizadoGlobal="✔️ ¡Agencia guardada con exito!";
-    },
-      err=>{
-        this.mensajePersonalizadoFormulario="❌ ¡Error "+err.status+", intentalo más tarde!";
-      }
-    )
-    
+
+
+    //-- Editar
+    if(this.entityAgencia.idAgencia!=null){
+      this.servicioConsumoApiAgencias.editarAgencia(this.entityAgencia).subscribe(
+        HttpResponse => {
+          this.entityAgencia=HttpResponse;
+          this.listarAgencias();
+          this.mensajePersonalizadoFormulario="✔️ ¡Agencia editada con exito!";
+        },
+        HttpErrorResponse=>{
+          switch(HttpErrorResponse.status){
+            default:
+               this.mensajePersonalizadoFormulario="❌ ¡Error "+HttpErrorResponse.status+"! Lo sentimos esta funcionalidad no esta disponible, intentalo más tarde";
+              break;
+          }
+        }
+      )
+    }
+
+        //-- Guardar
+        if(this.entityAgencia.idAgencia==null){
+          this.servicioConsumoApiAgencias.guardarAgencia(this.entityAgencia).subscribe(
+            HttpResponse =>{
+              this.entityAgencia=HttpResponse;
+              this.listarAgencias();
+              this.ocultarSeccionGuardarEditarAgencia();
+              this.mensajePersonalizadoGlobal="✔️ ¡Agencia guardada con exito!";
+          },
+            HttpErrorResponse => {
+              switch (HttpErrorResponse.status){
+                default:
+                  this.mensajePersonalizadoFormulario="❌ ¡Error "+HttpErrorResponse.status+"! Lo sentimos esta funcionalidad no esta disponible, intentalo más tarde";
+                  break;
+              }
+              this.mensajePersonalizadoFormulario="❌ ¡Error "+HttpErrorResponse.status+", intentalo más tarde!";
+            }
+          )
+        }
+
   }else{
-    console.log(this.formGrupFormGuardarEditar);
     this.mensajePersonalizadoFormulario="❌ ¡Rellena todos los campos!";
   }
 }
@@ -92,23 +175,16 @@ public guardarAgencia():void{
 public eliminarAgenciaById(entityAgencia: EntityAgencia):void{
 
         //Elimina la agencia
-        this.servicioConsumoApiAgencias.eliminarAgencia(entityAgencia.idAgencia).subscribe(respuesta=>{
-          this.mensajePersonalizadoGlobal="¡Agencia "+entityAgencia.nombreAgencia+" eliminada!";
+        this.servicioConsumoApiAgencias.eliminarAgencia(entityAgencia.idAgencia).subscribe(
+          HttpResponse =>{
+          this.mensajePersonalizadoGlobal="✔️ ¡Agencia "+entityAgencia.nombreAgencia+" eliminada!";
           this.listarAgencias();
           },
-          err=>{
-            switch(err.status){
-              case 500:
-                this.mensajePersonalizadoGlobal="No puedes eliminar esta Agencia ya que se encuentra asociada a otros registros";
-              break;
-
-              case 404:
-                this.mensajePersonalizadoGlobal="No puedes eliminar esta Agencia ya que no existe";
-                this.listarAgencias();
-              break;
-      
+          HttpErrorResponse=>{
+            switch(HttpErrorResponse.status){      
               default:
-                this.mensajePersonalizadoGlobal="Errors desconocido: "+err.status+"Intentalo más tarde";
+                this.mensajePersonalizadoGlobal="❌ ¡Error "+HttpErrorResponse.status+"! Lo sentimos esta funcionalidad no esta disponible, intentalo más tarde";
+                this.listarAgencias();
               break;
             }
           }
@@ -119,42 +195,9 @@ public eliminarAgenciaById(entityAgencia: EntityAgencia):void{
 
 
 
-//-- Metodo limpiar formulario guardar/editar Agencia
-private limpiarFormularioGuardarEditarAgencia():void{
-  this.formGrupFormGuardarEditar.reset();
-}
 
-//-- Metodo cargar ventana guardar
-public cargarVentanaGuardarAgencia():void{
-  this.activarBtnGuardarEditarAgencia=true;
-  this.tituloSeccionAnadorEditarAgencia="Guardar Agencia:";
-  this.tituloBtnGuardarEditarAgencia="Guardar";
-  this.mensajePersonalizadoFormulario="";
-  
-}
 
-//-- Metodo cargar ventana editar
-public cargarVentanaEditarAgencia(entityAgencia: EntityAgencia):void{
-  this.activarBtnGuardarEditarAgencia=true;
-  this.tituloSeccionAnadorEditarAgencia="Editar Agencia:";
-  this.tituloBtnGuardarEditarAgencia="Editar";
-  this.mensajePersonalizadoFormulario="";
 
-  this.servicioConsumoApiAgencias.buscarAgenciaById(entityAgencia.idAgencia).subscribe(respuesta=>{
-    this.entityAgencia=respuesta;
-  },
-      err=>{
-        this.mensajePersonalizadoFormulario="Error "+err.status+" al cargar Agencia a editar";
-      }
-  )
-
-}
-
-//-- Activar desactivar boton ocultar seccion editar/eliminar
-public ocultarSeccionGuardarEditarAgencia():void{
-    this.limpiarFormularioGuardarEditarAgencia();
-    this.activarBtnGuardarEditarAgencia=false;
-}
 
 
 
