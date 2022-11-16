@@ -1,30 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { VistaPanelAdministracionTravelingMexicoComponent } from './vista-panel-administracion-traveling-mexico/vista-panel-administracion-traveling-mexico.component';
 import { VistaPanelAdministracionAgenciasComponent } from './vista-panel-administracion-agencias/vista-panel-administracion-agencias.component';
 import { VistaPanelAdministracionDestinosComponent } from './vista-panel-administracion-destinos/vista-panel-administracion-destinos.component';
 import { VistaPanelAdministracionToursComponent } from './vista-panel-administracion-tours/vista-panel-administracion-tours.component';
-import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
-
+import { VistaGlobalDeAccesoPanelAdministracionComponent } from './vista-global-de-acceso-panel-administracion/vista-global-de-acceso-panel-administracion.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
-    VistaPanelAdministracionTravelingMexicoComponent,
     VistaPanelAdministracionAgenciasComponent,
     VistaPanelAdministracionDestinosComponent,
-    VistaPanelAdministracionToursComponent
+    VistaPanelAdministracionToursComponent,
+    VistaGlobalDeAccesoPanelAdministracionComponent
   ],
   imports: [
     CommonModule,
-    HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
-  exports: [
-    VistaPanelAdministracionTravelingMexicoComponent
+  exports:[
+    VistaGlobalDeAccesoPanelAdministracionComponent
   ]
 })
-export class ModuloTravelingMexicoModule { }
+export class MdPanelAdministracionAgenciasDestinosToursModule { }
