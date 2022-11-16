@@ -6,7 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { VistaGlobalDeAccesoPanelAdministracionComponent } from '../md-panel-administracion-agencias-destinos-tours/vista-global-de-acceso-panel-administracion/vista-global-de-acceso-panel-administracion.component';
 
 const routes: Routes = [
-  { path: 'panel-administracion', component: VistaGlobalDeAccesoPanelAdministracionComponent }
+  { path: 'panel-administracion', component: VistaGlobalDeAccesoPanelAdministracionComponent },
+  { path: '', component: VistaGlobalDeAccesoPanelAdministracionComponent }
 ]
 
 @NgModule({

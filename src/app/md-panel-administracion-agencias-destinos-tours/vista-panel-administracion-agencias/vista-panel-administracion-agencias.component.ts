@@ -23,10 +23,10 @@ public entityAgencia: EntityAgencia =new EntityAgencia();
 public tituloSeccionAnadorEditarAgencia: String="";
 public tituloBtnGuardarEditarAgencia: String="";
 public activarBtnGuardarEditarAgencia:boolean=false;
-public mensajePersonalizadoGlobal:String="";
+
 public mensajePersonalizadoFormulario:String="";
-
-
+public mensajePersonalizadoGlobalSuccess:String="";
+public mensajePersonalizadoGlobalError:String="";
 
 
 /* =========================== METODOS =========================== */
@@ -53,14 +53,23 @@ public ocultarSeccionGuardarEditarAgencia():void{
   this.limpiarFormularioGuardarEditarAgencia();
 }
 
+//-- Metodo limpia las notificaciones globales
+public limpiarNotificacionesGlobales(){
+  this.mensajePersonalizadoGlobalError="";
+  this.mensajePersonalizadoGlobalSuccess="";
+}
+
 //-- Metodo cargar ventana guardar
 public cargarVentanaGuardarAgencia():void{
   this.activarBtnGuardarEditarAgencia=true;
   this.tituloSeccionAnadorEditarAgencia="Guardar Agencia:";
   this.tituloBtnGuardarEditarAgencia="Guardar";
   this.mensajePersonalizadoFormulario="";
+  this.limpiarNotificacionesGlobales();
   this.limpiarFormularioGuardarEditarAgencia();
 }
+
+
 
 
 //-- Metodo cargar ventana editar
@@ -69,6 +78,7 @@ public cargarVentanaEditarAgencia(entityAgencia: EntityAgencia):void{
   this.tituloSeccionAnadorEditarAgencia="Editar Agencia:";
   this.tituloBtnGuardarEditarAgencia="Editar";
   this.mensajePersonalizadoFormulario="";
+  this.limpiarNotificacionesGlobales();
   this.limpiarFormularioGuardarEditarAgencia();
 
   this.servicioConsumoApiAgencias.buscarAgenciaById(entityAgencia.idAgencia).subscribe(
@@ -76,7 +86,7 @@ public cargarVentanaEditarAgencia(entityAgencia: EntityAgencia):void{
     HttpResponse => {
     this.entityAgencia=HttpResponse;   
     if(this.entityAgencia==null){
-      this.mensajePersonalizadoGlobal=" ❌ Lo sentimos, la Agencia que quieres editar no existe";
+      this.mensajePersonalizadoGlobalError=" ❌ Lo sentimos, la Agencia que quieres editar no existe";
       this.ocultarSeccionGuardarEditarAgencia();
       this.listarAgencias();
     } 
@@ -84,7 +94,7 @@ public cargarVentanaEditarAgencia(entityAgencia: EntityAgencia):void{
   HttpErrorResponse => {
         switch(HttpErrorResponse.status){
             default:
-                this.mensajePersonalizadoGlobal="❌ ¡Error "+HttpErrorResponse.status+"! Lo sentimos esta funcionalidad no esta disponible, intentalo más tarde";
+                this.mensajePersonalizadoGlobalError="❌ ¡Error "+HttpErrorResponse.status+"! Lo sentimos esta funcionalidad no esta disponible, intentalo más tarde";
                 this.ocultarSeccionGuardarEditarAgencia();
                 this.listarAgencias();
               break;
@@ -104,13 +114,13 @@ public listarAgencias():void{
     HttpResponse => {
       this.listEntityAgencia = HttpResponse;
       if(this.listEntityAgencia==null){
-        this.mensajePersonalizadoGlobal="❌ ¡Lo sentimos, aún no hay agencias registradas. Añade una para poder verla aquí";
+        this.mensajePersonalizadoGlobalError="❌ ¡Lo sentimos, aún no hay agencias registradas. Añade una para poder verla aquí";
       }
     },
       HttpErrorResponse=>{
         switch(HttpErrorResponse.estatus){
            default:
-               this.mensajePersonalizadoGlobal="❌ ¡Error "+HttpErrorResponse.status+"! Lo sentimos esta funcionalidad no esta disponible, intentalo más tarde";
+               this.mensajePersonalizadoGlobalError="❌ ¡Error "+HttpErrorResponse.status+"! Lo sentimos esta funcionalidad no esta disponible, intentalo más tarde";
              break;
 
         }
@@ -152,7 +162,7 @@ public guardarAgencia():void{
               this.entityAgencia=HttpResponse;
               this.listarAgencias();
               this.ocultarSeccionGuardarEditarAgencia();
-              this.mensajePersonalizadoGlobal="✔️ ¡Agencia guardada con exito!";
+              this.mensajePersonalizadoGlobalSuccess="✔️ ¡Agencia guardada con exito!";
           },
             HttpErrorResponse => {
               switch (HttpErrorResponse.status){
@@ -177,13 +187,13 @@ public eliminarAgenciaById(entityAgencia: EntityAgencia):void{
         //Elimina la agencia
         this.servicioConsumoApiAgencias.eliminarAgencia(entityAgencia.idAgencia).subscribe(
           HttpResponse =>{
-          this.mensajePersonalizadoGlobal="✔️ ¡Agencia "+entityAgencia.nombreAgencia+" eliminada!";
+          this.mensajePersonalizadoGlobalSuccess="✔️ ¡Agencia "+entityAgencia.nombreAgencia+" eliminada!";
           this.listarAgencias();
           },
           HttpErrorResponse=>{
             switch(HttpErrorResponse.status){      
               default:
-                this.mensajePersonalizadoGlobal="❌ ¡Error "+HttpErrorResponse.status+"! Lo sentimos esta funcionalidad no esta disponible, intentalo más tarde";
+                this.mensajePersonalizadoGlobalError="❌ ¡Error "+HttpErrorResponse.status+"! Lo sentimos esta funcionalidad no esta disponible, intentalo más tarde";
                 this.listarAgencias();
               break;
             }

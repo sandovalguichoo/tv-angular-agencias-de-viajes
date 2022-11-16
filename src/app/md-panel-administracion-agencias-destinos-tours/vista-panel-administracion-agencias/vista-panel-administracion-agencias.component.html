@@ -1,5 +1,13 @@
+<br>
+<section *ngIf="mensajePersonalizadoGlobalSuccess" class="alert alert-success">
+  <samp>{{mensajePersonalizadoGlobalSuccess}}</samp>
+</section>
+
+<section *ngIf="mensajePersonalizadoGlobalError" class="alert alert-danger">
+  <samp>{{mensajePersonalizadoGlobalError}}</samp>
+</section>
+
 <section>
-  <samp>{{mensajePersonalizadoGlobal}}</samp><br>
   <br>
   <hr>
   <h2>Agencias:</h2>
@@ -40,23 +48,22 @@
 <section *ngIf="activarBtnGuardarEditarAgencia==true" id="seccion2-guardarEditarAgencia">
   <br><br>
   <h2>{{ tituloSeccionAnadorEditarAgencia }}</h2>
-  <form  (ngSubmit)="guardarAgencia()" [formGroup]="formGrupFormGuardarEditar">
-    <span>Id Agencia:</span><br>
-    <input type="number" formControlName="form_idAgencia"             [(ngModel)]="entityAgencia.idAgencia" class="campos_form_guardar_editar"><br>
+  <samp>{{mensajePersonalizadoFormulario}}</samp><br>
+  <span><b>Id Agencia: </b>{{entityAgencia.idAgencia}}</span> &nbsp; &nbsp; <span><b>Fecha Creación: </b>{{entityAgencia.fechaRegistro}}</span><br><br>
+  <form  (ngSubmit)="guardarAgencia()" [formGroup]="formGrupFormGuardarEditar">  
     <span>Nombre Agencia: (Máx 250 carácteres)</span><br>
     <input type="text"   formControlName="form_nombreAgencia"         [(ngModel)]="entityAgencia.nombreAgencia" class="campos_form_guardar_editar"><br><br>
     <span>Dirección Agencia: (Máx 500 carácteres)</span><br>
     <input type="text"   formControlName="form_direccionAgencia"      [(ngModel)]="entityAgencia.direccion" class="campos_form_guardar_editar"><br><br>
     <span>Url Foto Agencia: (Máx 500 carácteres)</span><br>
     <input type="text"   formControlName="from_urlFotoAgencia"        [(ngModel)]="entityAgencia.urlFoto" class="campos_form_guardar_editar"><br><br>
-    <span>Fecha de creación:</span><br>
-    <input type="date" formControlName="form_fechaCreacionAgencia"    [(ngModel)]="entityAgencia.fechaRegistro" class="campos_form_guardar_editar"><br>
-
+    
+    <input type="hidden"     formControlName="form_idAgencia"        [(ngModel)]="entityAgencia.idAgencia" class="campos_form_guardar_editar" >
+    <input type="hidden" formControlName="form_fechaCreacionAgencia"    [(ngModel)]="entityAgencia.fechaRegistro" class="campos_form_guardar_editar"><br>
     <input type="submit" class="btn btn-success"  value="{{tituloBtnGuardarEditarAgencia}}"> <button class="btn btn-danger" (click)="ocultarSeccionGuardarEditarAgencia()">Cancelar</button>
   
   </form>
-  <samp>{{mensajePersonalizadoFormulario}}</samp><br><br>
-  <span>Id Agencia: {{entityAgencia.idAgencia}}</span> &nbsp; &nbsp; <span>Fecha Creación: {{entityAgencia.fechaRegistro}}</span>
+
 
   
 </section>
