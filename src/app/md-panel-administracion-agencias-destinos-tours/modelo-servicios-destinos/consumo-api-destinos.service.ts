@@ -47,7 +47,7 @@ export class ConsumoApiDestinosService {
 
 //-- Metodo guardar
 public guardar(entityDestino:EntityDestino):Observable<EntityDestino>{
-  return this.http.put(this.urlEndpoind+"save",entityDestino).pipe(
+  return this.http.post(this.urlEndpoind+"save",entityDestino).pipe(
     map(response=> response as EntityDestino),
     catchError(e=>{
       return throwError(e);

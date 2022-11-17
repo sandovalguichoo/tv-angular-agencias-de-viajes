@@ -94,7 +94,7 @@ public cargarVentanaEditarAgencia(entityAgencia: EntityAgencia):void{
   HttpErrorResponse => {
         switch(HttpErrorResponse.status){
             default:
-                this.mensajePersonalizadoGlobalError="❌ ¡Error "+HttpErrorResponse.status+"! Lo sentimos esta funcionalidad no esta disponible, intentalo más tarde";
+                this.mensajePersonalizadoGlobalError="❌ Error "+HttpErrorResponse.status+": "+ HttpErrorResponse.error.error; 
                 this.ocultarSeccionGuardarEditarAgencia();
                 this.listarAgencias();
               break;
@@ -120,7 +120,7 @@ public listarAgencias():void{
       HttpErrorResponse=>{
         switch(HttpErrorResponse.estatus){
            default:
-               this.mensajePersonalizadoGlobalError="❌ ¡Error "+HttpErrorResponse.status+"! Lo sentimos esta funcionalidad no esta disponible, intentalo más tarde";
+               this.mensajePersonalizadoGlobalError="❌ Error "+HttpErrorResponse.status+": "+ HttpErrorResponse.error.error; 
              break;
 
         }
@@ -148,7 +148,7 @@ public guardarAgencia():void{
         HttpErrorResponse=>{
           switch(HttpErrorResponse.status){
             default:
-               this.mensajePersonalizadoFormulario="❌ ¡Error "+HttpErrorResponse.status+"! Lo sentimos esta funcionalidad no esta disponible, intentalo más tarde";
+               this.mensajePersonalizadoFormulario="❌ Error "+HttpErrorResponse.status+": "+ HttpErrorResponse.error.error; 
               break;
           }
         }
@@ -158,20 +158,22 @@ public guardarAgencia():void{
         //-- Guardar
         if(this.entityAgencia.idAgencia==null){
           this.servicioConsumoApiAgencias.guardarAgencia(this.entityAgencia).subscribe(
+
             HttpResponse =>{
               this.entityAgencia=HttpResponse;
               this.listarAgencias();
               this.ocultarSeccionGuardarEditarAgencia();
               this.mensajePersonalizadoGlobalSuccess="✔️ ¡Agencia guardada con exito!";
           },
+
             HttpErrorResponse => {
               switch (HttpErrorResponse.status){
                 default:
-                  this.mensajePersonalizadoFormulario="❌ ¡Error "+HttpErrorResponse.status+"! Lo sentimos esta funcionalidad no esta disponible, intentalo más tarde";
+                  this.mensajePersonalizadoFormulario="❌ Error "+HttpErrorResponse.status+": "+ HttpErrorResponse.error.error; 
                   break;
               }
-              this.mensajePersonalizadoFormulario="❌ ¡Error "+HttpErrorResponse.status+", intentalo más tarde!";
             }
+
           )
         }
 
@@ -193,7 +195,7 @@ public eliminarAgenciaById(entityAgencia: EntityAgencia):void{
           HttpErrorResponse=>{
             switch(HttpErrorResponse.status){      
               default:
-                this.mensajePersonalizadoGlobalError="❌ ¡Error "+HttpErrorResponse.status+"! Lo sentimos esta funcionalidad no esta disponible, intentalo más tarde";
+                this.mensajePersonalizadoGlobalError="❌ Error "+HttpErrorResponse.status+": "+ HttpErrorResponse.error.error; 
                 this.listarAgencias();
               break;
             }

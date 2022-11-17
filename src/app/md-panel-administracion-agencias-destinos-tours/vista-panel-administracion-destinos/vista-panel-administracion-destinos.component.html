@@ -1,1 +1,86 @@
-<h2>Ups!! Esta funcionalidad estara lista en unos cuantos dias</h2>
+<br>
+<section *ngIf="mensajePersonalizadoGlobalSuccess" class="alert alert-success">
+  <samp>{{mensajePersonalizadoGlobalSuccess}}</samp>
+</section>
+
+<section *ngIf="mensajePersonalizadoGlobalError" class="alert alert-danger">
+  <samp>{{mensajePersonalizadoGlobalError}}</samp>
+</section>
+
+<section>
+  <br>
+  <hr>
+  <h2>Destinos:</h2>
+
+  <table class="table" *ngIf="listEntityDestino!=null"> 
+      <thead>
+        <tr>
+          <td scope="col"><b>📌 Id:</b></td>
+          <td scope="col"><b>🏢 Nombre:</b></td>
+          <td scope="col"><b>📍 Url Foto:</b></td>
+          <td scope="col"><b>📆 Fecha de registro:</b></td>
+          <td scope="col"></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <tr *ngFor="let entity of listEntityDestino">
+            <td>
+              {{entity.idDestino}}
+            </td>
+            <td>
+              {{entity.nombreDestino}}
+            </td>
+            <td>
+              <img src="{{entity.urlFoto}}" width="250" height="150">
+            </td>
+            <td>
+              {{entity.fechaRegistro}}
+            </td>
+          <td>
+              <a><button  type="button" class="btn btn-primary" (click)="cargarVentanaEditarDestino(entity)">Editar </button></a>
+              <a><button type="button" class="btn btn-danger" (click)="eliminarDestinoPorId(entity)">Eliminar</button></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>  
+
+    <a><button  type="button" class="btn btn-success" (click)="cargarVentanaGuardarAgencia()">Añadir Destino</button></a>  
+
+</section>
+
+
+
+<section *ngIf="activarBtnGuardarEditarDestino==true" id="seccion2-guardarEditarAgencia">
+  <br><br>
+  <h2>{{ tituloSeccionAnadorEditarDestino }}</h2>
+  <samp>{{mensajePersonalizadoFormulario}}</samp><br>
+  <span><b>Id Agencia: </b>{{entityDestino.idDestino}}</span> &nbsp; &nbsp; <span><b>Fecha Creación: </b>{{entityDestino.fechaRegistro}}</span><br><br>
+  
+  <form  (ngSubmit)="guardarEditarDestino()" [formGroup]="formGroupFormGuardarEditar">  
+    <span>Nombre Destino: (Máx 250 carácteres)</span><br>
+    <input type="text"   formControlName="form_nombreDestino" [(ngModel)]="entityDestino.nombreDestino" class="campos_form_guardar_editar"><br><br>
+    <span>Url Foto Destino: (Máx 500 carácteres)</span><br>
+    <input type="text"   formControlName="form_urlFoto"  [(ngModel)]="entityDestino.urlFoto" class="campos_form_guardar_editar"><br><br>
+
+    
+    <input type="hidden"     formControlName="form_idDestino"        [(ngModel)]="entityDestino.idDestino" class="campos_form_guardar_editar" >
+    <input type="hidden" formControlName="form_fechaRegistroDestino"    [(ngModel)]="entityDestino.fechaRegistro" class="campos_form_guardar_editar"><br>
+    <input type="submit" class="btn btn-success"  value="{{tituloBtnGuardarEditarDestino}}"> <button class="btn btn-danger" (click)="ocultarSeccionGuardarEditarAgencia()">Cancelar</button>
+  
+  </form>
+  
+</section>
+
+<br>  <br>  <br>
+<section>
+  <h2>Recursos:</h2>
+  <p>Aquí abajo podrás encontrar un listado de URLS de fotografías que puedes añadir a tus registros</p>
+  <ul>
+    <li>https://traveling-mexico.sandovalguicho.com/img/img1.webp</li>
+    <li>https://traveling-mexico.sandovalguicho.com/img/img2.webp</li>
+    <li>https://traveling-mexico.sandovalguicho.com/img/img3.webp</li>
+    <li>https://traveling-mexico.sandovalguicho.com/img/img4.webp</li>
+    <li>https://traveling-mexico.sandovalguicho.com/img/img5.webp</li>
+  </ul>
+</section>
