@@ -26,11 +26,21 @@
       <tbody>
         <tr>
           <tr *ngFor="let entity of listEntityAgencia">
-            <td>{{entity.idAgencia}}</td>
-            <td>{{entity.nombreAgencia}}</td>
-            <td>{{entity.direccion}} </td>
-            <td>{{entity.urlFoto}} </td>
-            <td>{{entity.fechaRegistro}}</td>
+            <td>
+              {{entity.idAgencia}}
+            </td>
+            <td>
+              {{entity.nombreAgencia}}
+            </td>
+            <td>
+              {{entity.direccion}} 
+            </td>
+            <td>
+              <img src="{{entity.urlFoto}}" width="250" height="150">
+            </td>
+            <td>
+              {{entity.fechaRegistro}}
+            </td>
           <td>
               <a><button  type="button" class="btn btn-primary" (click)="cargarVentanaEditarAgencia(entity)">Editar </button></a>
               <a><button type="button" class="btn btn-danger" (click)="eliminarAgenciaById(entity)">Eliminar</button></a>
@@ -63,8 +73,19 @@
     <input type="submit" class="btn btn-success"  value="{{tituloBtnGuardarEditarAgencia}}"> <button class="btn btn-danger" (click)="ocultarSeccionGuardarEditarAgencia()">Cancelar</button>
   
   </form>
-
-
   
+</section>
+
+<br>  <br>  <br>
+<section>
+  <h2>Recursos:</h2>
+  <p>Aquí abajo podrás encontrar un listado de URLS de fotografías que puedes añadir a tus registros</p>
+  <ul>
+    <li>https://traveling-mexico.sandovalguicho.com/img/img1.webp</li>
+    <li>https://traveling-mexico.sandovalguicho.com/img/img2.webp</li>
+    <li>https://traveling-mexico.sandovalguicho.com/img/img3.webp</li>
+    <li>https://traveling-mexico.sandovalguicho.com/img/img4.webp</li>
+    <li>https://traveling-mexico.sandovalguicho.com/img/img5.webp</li>
+  </ul>
 </section>
 
