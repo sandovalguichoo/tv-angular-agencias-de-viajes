@@ -11,9 +11,9 @@ export class ConsumoApiToursService {
 
 
   //-- Variables globales
-  //private urlEndpoind="https://tv-traveling-api.herokuapp.com/tours/";
+  private urlEndpoind="https://tv-traveling-api.herokuapp.com/tours/";
   //private urlEndpoind: String= "http://localhost:8090/api/traveling-api/tours/";
-  private urlEndpoind: String= "http://localhost:8080/tours/";
+  //private urlEndpoind: String= "http://localhost:8080/tours/";
 
 
 

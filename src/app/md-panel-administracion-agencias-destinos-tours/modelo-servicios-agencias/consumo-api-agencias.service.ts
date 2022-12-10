@@ -10,9 +10,9 @@ import { HttpClient } from '@angular/common/http';
 export class ConsumoApiAgenciasService {
 
   //-- Variables globales
-  //private urlEndPind:String="https://tv-traveling-api.herokuapp.com/agencias/";
+  private urlEndPind:String="https://tv-traveling-api.herokuapp.com/agencias/";
   //private urlEndPind: String= "http://localhost:8090/api/traveling-api/agencias/";
-  private urlEndPind: String= "http://localhost:8080/agencias/";
+  //private urlEndPind: String= "http://localhost:8080/agencias/";
 
 
 
