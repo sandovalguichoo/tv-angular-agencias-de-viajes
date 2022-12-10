@@ -1,1 +1,148 @@
-<h2>Ups!! Esta funcionalidad estara lista en un par de dias</h2>
+<br>
+<section *ngIf="mensajePersonalizadoGlobalSuccess" class="alert alert-success">
+  <samp>{{mensajePersonalizadoGlobalSuccess}}</samp>
+</section>
+
+<section *ngIf="mensajePersonalizadoGlobalError" class="alert alert-danger">
+  <samp>{{mensajePersonalizadoGlobalError}}</samp>
+</section>
+
+<section>
+  <br>
+  <hr>
+  <h2>Tours:</h2>
+
+  <table class="table" *ngIf="listEntityTour!=null"> 
+      <thead>
+        <tr>
+          <td scope="col"><b>📌 Id:</b></td>
+          <td scope="col"><b>🏢 Agencia:</b></td>
+          <td scope="col"><b>🚴‍♀️ Destino:</b></td>
+          <td scope="col"><b>📆 Fecha Salida:</b></td>
+          <td scope="col"><b>📆 Fecha Regreso:</b></td>
+          <td scope="col"><b>📝 Descripción Corta:</b></td>
+          <td scope="col"><b>🔗 Url Páina:</b></td>
+          <td scope="col"><b>💰 Precio:</b></td>
+          <td scope="col"><b>📅 Fecha Registro:</b></td>
+          <td scope="col"></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <tr *ngFor="let entity of listEntityTour">
+            <td>
+              {{entity.idTour}}
+            </td>
+            <td>
+              {{entity.entityAgencia.nombreAgencia}}
+            </td>
+            <td>
+              {{entity.entityDestino.nombreDestino}}
+            </td>
+            <td>
+              {{entity.fSalida}} <br> Hora: {{entity.hSalida}}
+            </td>
+            <td>
+              {{entity.fRegreso}} <br> Hora: {{entity.hRegreso}}
+            </td>
+            <td>
+              {{entity.descripcionCorta}}
+            </td>
+            <td>
+              <a href="{{entity.urlPagina}}" target="_blank">
+                Ver más información
+              </a>
+            </td>
+            <td>
+              {{entity.precio}}
+            </td>
+            <td>
+              {{entity.fCreacion}}
+            </td>
+          <td>
+              <a><button  type="button" class="btn btn-primary" (click)="cargarVentanaEditarTour(entity)">Editar </button></a>
+              <a><button type="button" class="btn btn-danger" (click)="eliminarTourPorId(entity)">Eliminar</button></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>  
+
+    <a><button  type="button" class="btn btn-success" (click)="cargarVentanaGuardarAgencia()">Añadir Tour</button></a>  
+
+</section>
+
+
+
+<section *ngIf="activarBtnGuardarEditarTour==true" id="seccion2-guardarEditarAgencia">
+  <br><br>
+  <h2>{{ tituloSeccionAnadorEditarTour }}</h2>
+  <samp>{{mensajePersonalizadoFormulario}}</samp><br>
+  <span><b>Id Tour: </b> {{entityTour.idTour}} </span> &nbsp; &nbsp; <span><b>Fecha Creación: </b>{{entityTour.fCreacion}}</span><br><br>
+  
+  <form  (ngSubmit)="guardarEditarTours()" [formGroup]="formGroupFormGuardarEditar">  
+    
+    <span>Agencia:</span><br>
+    <select formControlName="form_idAgencia" [(ngModel)]="entityTour.entityAgencia.idAgencia" class="campos_form_guardar_editar"><br>
+      <option 
+        *ngFor="let entity of listEntityAgencias"
+        value=" {{entity.idAgencia}} "
+        [selected]="entity.idAgencia == entityTour.entityAgencia.idAgencia">
+          {{entity.nombreAgencia}}
+      </option>
+    </select><br>
+   
+    <span>Destino:</span><br>
+    <select formControlName="form_idDestino" [(ngModel)]="entityTour.entityDestino.idDestino" class="campos_form_guardar_editar"><br>
+      <option 
+        *ngFor="let entity of listEntityDestinos"
+        value=" {{entity.idDestino}} " 
+        [selected]="entity.idDestino == entityTour.entityDestino.idDestino">
+            {{entity.nombreDestino}}
+        </option>
+    </select><br>
+
+    <hr>
+    <span>Fecha Salida:</span><br>
+    <input type="date"   formControlName="form_fSalida" [(ngModel)]="entityTour.fSalida" class="campos_form_guardar_editar"><br>
+    <span>Hora Salida:</span><br>
+    <input type="time"   formControlName="form_hSalida" [(ngModel)]="entityTour.hSalida" class="campos_form_guardar_editar"><br>
+    <hr>
+    <span>Fecha Regreso:</span><br>
+    <input type="date"   formControlName="form_fRegreso" [(ngModel)]="entityTour.fRegreso" class="campos_form_guardar_editar"><br>
+    <span>Hora Regreso:</span><br>
+    <input type="time"   formControlName="form_hRegreso" [(ngModel)]="entityTour.hRegreso" class="campos_form_guardar_editar"><br>
+    <hr>
+    <span>Precio:</span><br>
+    <input type="number"   formControlName="form_precio" [(ngModel)]="entityTour.precio" class="campos_form_guardar_editar"><br>
+    <span>Descripción Corta:</span><br>
+    <textarea  formControlName="form_descripcionCorta" [(ngModel)]="entityTour.descripcionCorta" class="campos_form_guardar_editar">
+    </textarea><br>
+    <span>Url Página:</span><br>
+    <input type="text"   formControlName="form_urlPagina" [(ngModel)]="entityTour.urlPagina" class="campos_form_guardar_editar"><br>
+  
+  
+   <input type="hidden" formControlName="form_idTour"    [(ngModel)]="entityTour.idTour" class="campos_form_guardar_editar"><br>
+   <input type="hidden"   formControlName="form_fechaCreacion" [(ngModel)]="entityTour.fCreacion" class="campos_form_guardar_editar"><br>
+   
+    <input type="submit" class="btn btn-success"  value="{{tituloBtnGuardarEditarTour}}"> <button class="btn btn-danger" (click)="ocultarSeccionGuardarEditarAgencia()">Cancelar</button>
+  
+  </form>
+  
+</section>
+
+
+
+<br>  <br>  <br>
+<section>
+  <h2>Recursos:</h2>
+  <p>Aquí abajo podrás encontrar un listado de URLS de fotografías que puedes añadir a tus registros</p>
+  <ul>
+    <li>https://traveling-mexico.sandovalguicho.com/img/img1.webp</li>
+    <li>https://traveling-mexico.sandovalguicho.com/img/img2.webp</li>
+    <li>https://traveling-mexico.sandovalguicho.com/img/img3.webp</li>
+    <li>https://traveling-mexico.sandovalguicho.com/img/img4.webp</li>
+    <li>https://traveling-mexico.sandovalguicho.com/img/img5.webp</li>
+  </ul>
+</section>
+
+

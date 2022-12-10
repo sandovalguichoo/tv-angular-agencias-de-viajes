@@ -143,7 +143,8 @@ public guardarAgencia():void{
         HttpResponse => {
           this.entityAgencia=HttpResponse;
           this.listarAgencias();
-          this.mensajePersonalizadoFormulario="✔️ ¡Agencia editada con exito!";
+          this.ocultarSeccionGuardarEditarAgencia()
+          this.mensajePersonalizadoGlobalSuccess="✔️ ¡Agencia editada con exito!";
         },
         HttpErrorResponse=>{
           switch(HttpErrorResponse.status){

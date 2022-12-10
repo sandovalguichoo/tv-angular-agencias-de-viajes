@@ -10,7 +10,10 @@ import { catchError, map } from 'rxjs/operators';
 export class ConsumoApiDestinosService {
 
   //-- Variables globales
-  private urlEndpoind: String="https://traveling-aapi.herokuapp.com/destinos/";
+  //private urlEndpoind: String="https://tv-traveling-api.herokuapp.com/destinos/";
+ //private urlEndpoind: String= "http://localhost:8090/api/traveling-api/destinos/";
+ private urlEndpoind: String= "http://localhost:8080/destinos/";
+
 
 
   //-- Metodo listar todo

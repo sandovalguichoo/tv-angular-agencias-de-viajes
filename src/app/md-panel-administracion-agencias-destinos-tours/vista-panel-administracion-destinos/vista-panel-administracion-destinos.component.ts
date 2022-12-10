@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ConsumoApiDestinosService } from '../modelo-servicios-destinos/consumo-api-destinos.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
+import { ConsumoApiAgenciasService } from '../modelo-servicios-agencias/consumo-api-agencias.service';
 
 @Component({
   selector: 'app-vista-panel-administracion-destinos',
@@ -75,7 +76,8 @@ public cargarVentanaEditarDestino(entityDestino:EntityDestino):void{
   
   this.servicioConsumoApiDestinos.buscarPorId(entityDestino.idDestino).subscribe(
     HttpResponse => {
-    this.entityDestino=HttpResponse;   
+    this.entityDestino=HttpResponse;  
+
     if(this.entityDestino==null){
       this.mensajePersonalizadoGlobalError=" ❌ Lo sentimos, el Destino que quieres editar no existe";
       this.ocultarSeccionGuardarEditarAgencia();
@@ -121,7 +123,7 @@ public guardarEditarDestino():void{
     if(this.entityDestino.idDestino!=null){
       this.servicioConsumoApiDestinos.editarPorId(this.entityDestino).subscribe(
         HttpResponse=>{
-          this.mensajePersonalizadoFormulario="✔️ Destino editado con exito!";
+          this.mensajePersonalizadoGlobalSuccess="✔️ Destino editado con exito!";
           this.entityDestino=HttpResponse;
           this.ocultarSeccionGuardarEditarAgencia();
           this.listarDestinos();
@@ -144,7 +146,7 @@ public guardarEditarDestino():void{
     if(this.entityDestino.idDestino == null){
       this.servicioConsumoApiDestinos.guardar(this.entityDestino).subscribe(
         HttpResponse=>{
-          this.mensajePersonalizadoGlobalSuccess="✔️ Destino Guardad con exito!";
+          this.mensajePersonalizadoGlobalSuccess="✔️ Destino Guardado con exito!";
           this.ocultarSeccionGuardarEditarAgencia();
           this.listarDestinos();
           
@@ -184,7 +186,7 @@ public eliminarDestinoPorId(entityDestino:EntityDestino):void{
 }
 
   constructor(
-    private servicioConsumoApiDestinos: ConsumoApiDestinosService
+    private servicioConsumoApiDestinos: ConsumoApiDestinosService,
 
   ) { }
 
